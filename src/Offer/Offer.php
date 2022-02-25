@@ -24,13 +24,6 @@ class Offer
     #[Column(type: "integer", options: ["unsigned" => true])]
     private int $person;
 
-    /**
-     * @param string $region
-     * @param string $address
-     * @param string $description
-     * @param string $phoneNumber
-     * @param int $person
-     */
     public function __construct(Region $region, string $address, string $description, string $phoneNumber, int $person)
     {
         $this->region = $region;
@@ -40,7 +33,7 @@ class Offer
         $this->person = $person;
     }
 
-    public function getRegion(): string
+    public function getRegion(): Region
     {
         return $this->region;
     }
@@ -60,7 +53,7 @@ class Offer
         return $this->phoneNumber;
     }
 
-    public function getPerson(): int
+    public function getPersons(): int
     {
         return $this->person;
     }

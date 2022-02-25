@@ -4,6 +4,7 @@ namespace App\Offer;
 
 
 use App\Common\Controller\ControllerInterface;
+use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,6 +28,13 @@ class OfferController implements ControllerInterface
         );
         $this->offers->save($offer);
         return new JsonResponse();
+    }
+
+    #[Get('/api/v1/offer')]
+    public function get(): JsonResponse
+    {
+        $offers = $this->offers->findAll();
+        return new JsonResponse(OfferOutput::createMany(...$offers));
     }
 
 }
