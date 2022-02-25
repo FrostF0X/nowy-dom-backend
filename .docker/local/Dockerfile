@@ -17,11 +17,13 @@ RUN apt-get update && apt-get install -y \
     libssh-dev \
     openssh-server \
     libicu-dev \
-    && docker-php-ext-install pdo_mysql
+    libpq-dev \
+    postgresql-client
 RUN pecl install xdebug amqp
 RUN docker-php-ext-enable amqp
 RUN docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-freetype=/usr/include/
-RUN docker-php-ext-configure zip && docker-php-ext-install zip intl pdo_mysql
+RUN docker-php-ext-configure zip && docker-php-ext-install zip intl
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && docker-php-ext-install pdo pdo_pgsql pgsql
 RUN docker-php-ext-install -j$(nproc) gd
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=2.1.9
 RUN curl -sS https://get.symfony.com/cli/installer | bash && ln -s /root/.symfony/bin/symfony /usr/bin/symfony

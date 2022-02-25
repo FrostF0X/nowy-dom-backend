@@ -11,6 +11,7 @@ services:
       - "s3:media.s3"
     environment:
       HOST_PROJECT_DIR: ${PWD}
+      DATABASE_URL: "postgres://postgres:postgres@database:5432/postgres?sslmode=disable&charset=utf8"
       DB_PORT: "3306"
       DB_DATABASE: "dockerApp"
       DB_USERNAME: "root"
@@ -40,17 +41,14 @@ services:
       - '.env'
       - '.env.debug'
   database:
-    image: mysql:5.7.27
+    image: postgres:13.6
+    restart: always
     environment:
-      - "MYSQL_ROOT_PASSWORD=secret"
-      - "MYSQL_DATABASE=dockerApp"
+      POSTGRES_PASSWORD: postgres
     ports:
-      - "3306:3306"
-    healthcheck:
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
-      interval: 5s
-      timeout: 20s
-      retries: 10
+      - "5432:5432"
+    volumes:
+      - database:/var/lib/postgresql/data
   redis:
     image: redis:6.2.1
     command: [ "redis-server", "--appendonly", "yes" ]
@@ -91,7 +89,6 @@ services:
       timeout: 20s
       retries: 3
 
-
   s3-createbucket:
     image: minio/mc
     depends_on: [ s3 ]
@@ -107,6 +104,7 @@ volumes:
   app:
     name: focusly_app
   s3:
+  database:
 
 networks:
   default:
