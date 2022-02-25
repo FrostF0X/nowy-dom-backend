@@ -38,3 +38,12 @@ exec:
 
 exec-debug:
 	$(APP_DEBUG_EXEC)
+
+migration-diff:
+	$(APP_EXEC) bin/console doctrine:migrations:diff
+
+migrate:
+	$(APP_EXEC) bin/console doctrine:migrations:migrate
+
+migrate-prev:
+	$(APP_EXEC) bin/console doctrine:migrations:migrate prev

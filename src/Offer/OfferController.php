@@ -20,11 +20,13 @@ class OfferController implements ControllerInterface
     public function add(OfferInput $input): JsonResponse
     {
         $offer = new Offer(
+            $input->email,
+            $input->googleMapsLink,
             Region::get($input->region),
             $input->address,
             $input->description,
             $input->phoneNumber,
-            $input->persons
+            $input->persons,
         );
         $this->offers->save($offer);
         return new JsonResponse();
