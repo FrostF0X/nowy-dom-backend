@@ -35,7 +35,7 @@ class OfferController implements ControllerInterface
 
     #[Get('/api/v1/offer')]
     #[QueryParam(name: "region", requirements: "\w+")]
-    public function get(string $region): JsonResponse
+    public function get(?string $region = null): JsonResponse
     {
         if (!Region::accepts($region)) {
             return new JsonResponse('Cannot accept value ' . $region, 404);
