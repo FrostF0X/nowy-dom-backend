@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+  app:
+    build:
+      target: base
+    volumes:
+      - app:/var/www
+  app-debug:
+    build:
+      target: base
+    volumes:
+      - app:/var/www
+  app-test:
+    build:
+      target: base
+    volumes:
+      - app:/var/www
+
+volumes:
+  app:
+
+x-mutagen:
+  sync:
+    defaults:
+      ignore:
+        vcs: true
+    app:
+      alpha: "../.."
+      beta: "volume://app"
+      mode: "two-way-resolved"
