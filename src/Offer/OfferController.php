@@ -6,6 +6,7 @@ namespace App\Offer;
 use App\Common\Controller\ControllerInterface;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -33,9 +34,14 @@ class OfferController implements ControllerInterface
     }
 
     #[Get('/api/v1/offer')]
-    public function get(): JsonResponse
+    #[QueryParam(name: "region", requirements: "\w+")]
+    public function get(string $region): JsonResponse
     {
-        $offers = $this->offers->findAll();
+        if (!Region::accepts($region)) {
+            return new JsonResponse('Cannot accept value ' . $region, 404);
+        }
+        $region = Region::get($region);
+        $offers = $region ? $this->offers->findBy(['region' => $region]) : $this->offers->findAll();
         return new JsonResponse(OfferOutput::createMany(...$offers));
     }
 
