@@ -35,7 +35,7 @@ class AddAdminCommand extends Command
         }
         $user->setEmail(self::ADMIN_MAIL);
         $user->setPassword($this->hasher->hashPassword($user, $input->getArgument('password')));
-        $user->setRoles(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN']);
+        $user->setRoles([Role::ROLE_ADMIN, Role::ROLE_SUPER_ADMIN]);
         $this->users->save($user);
         return 0;
     }

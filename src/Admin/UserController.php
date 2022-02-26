@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\User\Role;
 use App\User\User;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -28,15 +29,15 @@ class UserController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return parent::configureActions($actions)
-            ->setPermission(Action::BATCH_DELETE, 'ROLE_SUPER_ADMIN')
-            ->setPermission(Action::NEW, 'ROLE_SUPER_ADMIN')
-            ->setPermission(Action::EDIT, 'ROLE_SUPER_ADMIN')
-            ->setPermission(Action::INDEX, 'ROLE_SUPER_ADMIN')
-            ->setPermission(Action::DETAIL, 'ROLE_SUPER_ADMIN')
-            ->setPermission(Action::SAVE_AND_RETURN, 'ROLE_SUPER_ADMIN')
-            ->setPermission(Action::SAVE_AND_CONTINUE, 'ROLE_SUPER_ADMIN')
-            ->setPermission(Action::SAVE_AND_ADD_ANOTHER, 'ROLE_SUPER_ADMIN')
-            ->setPermission(Action::DELETE, 'ROLE_SUPER_ADMIN');
+            ->setPermission(Action::BATCH_DELETE, Role::ROLE_SUPER_ADMIN)
+            ->setPermission(Action::NEW, Role::ROLE_SUPER_ADMIN)
+            ->setPermission(Action::EDIT, Role::ROLE_SUPER_ADMIN)
+            ->setPermission(Action::INDEX, Role::ROLE_SUPER_ADMIN)
+            ->setPermission(Action::DETAIL, Role::ROLE_SUPER_ADMIN)
+            ->setPermission(Action::SAVE_AND_RETURN, Role::ROLE_SUPER_ADMIN)
+            ->setPermission(Action::SAVE_AND_CONTINUE, Role::ROLE_SUPER_ADMIN)
+            ->setPermission(Action::SAVE_AND_ADD_ANOTHER, Role::ROLE_SUPER_ADMIN)
+            ->setPermission(Action::DELETE, Role::ROLE_SUPER_ADMIN);
     }
 
 
@@ -48,7 +49,7 @@ class UserController extends AbstractCrudController
             ChoiceField::new('roles')
                 ->setChoices([
                     'Admin' => 'ROLE_ADMIN',
-                    'Super admin (can edit users)' => 'ROLE_SUPER_ADMIN',
+                    'Super admin (can edit users)' => Role::ROLE_SUPER_ADMIN,
                 ])
                 ->allowMultipleChoices(true),
         ];
