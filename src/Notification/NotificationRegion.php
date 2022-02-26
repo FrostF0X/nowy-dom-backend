@@ -3,12 +3,12 @@
 namespace App\Notification;
 
 use Elao\Enum\AutoDiscoveredValuesTrait;
-use Elao\Enum\Enum;
+use Elao\Enum\ReadableEnum;
 
 /**
  * @method static self ALL()
  */
-class NotificationRegion extends Enum
+class NotificationRegion extends ReadableEnum
 {
     use AutoDiscoveredValuesTrait;
 
@@ -66,10 +66,13 @@ class NotificationRegion extends Enum
         'KIYEW' => "Київ",
     ];
 
+    public static function readables(): array
+    {
+        return self::MAP;
+    }
+
     public function __toString(): string
     {
         return self::MAP[$this->value];
     }
-
-
 }
