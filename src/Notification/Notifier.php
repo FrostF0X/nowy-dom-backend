@@ -21,10 +21,23 @@ class Notifier
      */
     public function send(Notification $notification)
     {
-        $message = CloudMessage::withTarget('topic', $notification->getRegion()->getValue())
+
+        $message = $this->messageBasedOnRegion($notification)
             ->withNotification(FirebaseNotification::create($notification->getTitle(), $notification->getBody()));
 
         $this->messaging->send($message);
+    }
+
+    /**
+     * @param Notification $notification
+     * @return CloudMessage
+     */
+    private function messageBasedOnRegion(Notification $notification): CloudMessage
+    {
+
+        return $notification->getRegion()->equals(NotificationRegion::ALL()) ?
+            CloudMessage::new() :
+            CloudMessage::withTarget('topic', $notification->getRegion()->getValue());
     }
 
 }

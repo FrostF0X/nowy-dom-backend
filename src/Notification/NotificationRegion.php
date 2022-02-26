@@ -5,6 +5,9 @@ namespace App\Notification;
 use Elao\Enum\AutoDiscoveredValuesTrait;
 use Elao\Enum\Enum;
 
+/**
+ * @method static self ALL()
+ */
 class NotificationRegion extends Enum
 {
     use AutoDiscoveredValuesTrait;
