@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Notification\Notification;
+use App\User\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -34,5 +35,7 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToCrud('Notifications', 'fas fa-list', Notification::class);
+        yield MenuItem::linkToCrud('User', 'fa fa-user-circle', User::class)
+            ->setPermission('ROLE_SUPER_ADMIN');
     }
 }

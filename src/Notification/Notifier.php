@@ -35,9 +35,7 @@ class Notifier
     private function messageBasedOnRegion(Notification $notification): CloudMessage
     {
 
-        return $notification->getRegion()->equals(NotificationRegion::ALL()) ?
-            CloudMessage::new() :
-            CloudMessage::withTarget('topic', $notification->getRegion()->getValue());
+        return CloudMessage::withTarget('topic', $notification->getRegion()->getValue());
     }
 
 }
