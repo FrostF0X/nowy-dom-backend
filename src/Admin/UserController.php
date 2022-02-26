@@ -40,12 +40,11 @@ class UserController extends AbstractCrudController
     }
 
 
-
     public function configureFields(string $pageName): iterable
     {
         return [
             EmailField::new('email')->setRequired(true),
-            TextField::new('password')->setFormType(PasswordType::class)->setRequired(false),
+            TextField::new('plainPassword')->setFormType(PasswordType::class)->setRequired(false),
             ChoiceField::new('roles')
                 ->setChoices([
                     'Admin' => 'ROLE_ADMIN',
@@ -55,14 +54,25 @@ class UserController extends AbstractCrudController
         ];
     }
 
-
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param User $entityInstance
-     */
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
+        $this->setUserPlainPassword($entityInstance);
+
         parent::persistEntity($entityManager, $entityInstance);
+    }
+
+    private function setUserPlainPassword(User $user): void
+    {
+        if ($user->getPlainPassword()) {
+            $user->setPassword($this->hasher->hashPassword($user, $user->getPlainPassword()));
+        }
+    }
+
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        $this->setUserPlainPassword($entityInstance);
+
+        parent::updateEntity($entityManager, $entityInstance);
     }
 
 
