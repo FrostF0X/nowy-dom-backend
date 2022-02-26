@@ -48,5 +48,4 @@ class NotificationController extends AbstractCrudController
         ];
     }
 
-
 }

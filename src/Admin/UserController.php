@@ -48,7 +48,7 @@ class UserController extends AbstractCrudController
             TextField::new('plainPassword')->setFormType(PasswordType::class)->setRequired(false),
             ChoiceField::new('roles')
                 ->setChoices([
-                    'Admin' => 'ROLE_ADMIN',
+                    'Admin' => Role::ROLE_ADMIN,
                     'Super admin (can edit users)' => Role::ROLE_SUPER_ADMIN,
                 ])
                 ->allowMultipleChoices(true),

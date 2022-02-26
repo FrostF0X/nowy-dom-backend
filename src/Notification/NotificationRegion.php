@@ -12,7 +12,6 @@ class NotificationRegion extends Enum
 {
     use AutoDiscoveredValuesTrait;
 
-    public const ALL = 'ALL';
     public const VINNYTSA = 'VINNYTSA';
     public const VOLYNSKA = 'VOLYNSKA';
     public const DNIPROPETROVSKAYA = 'DNIPROPETROVSKAYA';
@@ -40,7 +39,6 @@ class NotificationRegion extends Enum
     public const KIYEW = 'KIYEW';
 
     public const MAP = [
-        'ALL' => "Вся Україна",
         'VINNYTSA' => "Вінницька",
         'VOLYNSKA' => "Волинська",
         'DNIPROPETROVSKAYA' => "Дніпропетровська",
