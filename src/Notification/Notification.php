@@ -3,20 +3,25 @@
 namespace App\Notification;
 
 use App\Common\Entity\HasId;
+use App\Common\Entity\HasTimestamps;
+use App\Common\Entity\Timestampable;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 
 #[Entity]
 #[Table(name: "notification")]
-class Notification
+class Notification implements Timestampable
 {
     use HasId;
+    use HasTimestamps;
 
     #[Column(type: "notification_region", nullable: false)]
     private NotificationRegion $region;
     #[Column(type: "text", nullable: true)]
-    private string $text;
+    private string $title;
+    #[Column(type: "text", nullable: true)]
+    private string $body;
 
     public function getRegion(): NotificationRegion
     {
@@ -28,14 +33,24 @@ class Notification
         $this->region = $region;
     }
 
-    public function getText(): string
+    public function getTitle(): string
     {
-        return $this->text;
+        return $this->title;
     }
 
-    public function setText(string $text): void
+    public function setTitle(string $title): void
     {
-        $this->text = $text;
+        $this->title = $title;
+    }
+
+    public function getBody(): string
+    {
+        return $this->body;
+    }
+
+    public function setBody(string $body): void
+    {
+        $this->body = $body;
     }
 
 }

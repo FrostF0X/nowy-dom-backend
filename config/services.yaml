@@ -21,3 +21,6 @@ services:
     App\Common\Controller\ControllerInterface:
       tags: [ 'controller.service_arguments' ]
 
+  App\Common\Entity\TimestampableSubscriber:
+    tags:
+      - { name: doctrine.event_subscriber }

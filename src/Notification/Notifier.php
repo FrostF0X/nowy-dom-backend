@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Admin;
+namespace App\Notification;
 
-
-use App\Notification\Notification;
 use Kreait\Firebase\Contract\Messaging;
 use Kreait\Firebase\Exception\FirebaseException;
 use Kreait\Firebase\Exception\MessagingException;
@@ -23,8 +21,8 @@ class Notifier
      */
     public function send(Notification $notification)
     {
-        $message = CloudMessage::withTarget('topic', (string)$notification->getRegion())
-            ->withNotification(FirebaseNotification::create($notification->getText(), $notification->getText()));
+        $message = CloudMessage::withTarget('topic', $notification->getRegion()->getValue())
+            ->withNotification(FirebaseNotification::create($notification->getTitle(), $notification->getBody()));
 
         $this->messaging->send($message);
     }
