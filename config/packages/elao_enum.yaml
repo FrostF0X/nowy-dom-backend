@@ -4,3 +4,4 @@ elao_enum:
   doctrine:
     types:
       region: App\Offer\Region
+      notification_region: App\Notification\NotificationRegion
