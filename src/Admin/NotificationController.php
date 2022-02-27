@@ -56,12 +56,12 @@ class NotificationController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            EnumField::new('region')
+            EnumField::new('region', 'Регіон')
                 ->setEnumType(NotificationRegion::class)
                 ->setFormTypeOption('choices', $this->getRegions()),
-            TextareaField::new('title'),
-            TextareaField::new('body'),
-            Field::new('created_at')->setTemplatePath('date.html.twig')->onlyOnIndex(),
+            TextareaField::new('title','Tитул'),
+            TextareaField::new('body', 'Текст'),
+            Field::new('created_at','Створено')->setTemplatePath('date.html.twig')->onlyOnIndex(),
         ];
     }
 
