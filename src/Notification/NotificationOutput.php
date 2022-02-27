@@ -2,7 +2,9 @@
 
 namespace App\Notification;
 
+use DateTime;
 use DateTimeInterface;
+use DateTimeZone;
 use JetBrains\PhpStorm\Pure;
 
 class NotificationOutput
@@ -29,7 +31,9 @@ class NotificationOutput
         return new self(
             $notification->getId(),
             $notification->getCreatedAt()->format(DateTimeInterface::ATOM),
-            $notification->getCreatedAt()->format('H:i / d.m'),
+            DateTime::createFromInterface($notification->getCreatedAt())
+                ->setTimezone(new DateTimeZone('Europe/Kiev'))
+                ->format('H:i / d.m'),
             $notification->getRegion()->getValue(),
             $notification->getTitle(),
             $notification->getBody()
