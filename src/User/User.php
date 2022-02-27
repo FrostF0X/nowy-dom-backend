@@ -90,9 +90,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[Pure] public function isAllowed(NotificationRegion $region): bool
     {
-        $role = Role::forRegion($region);
-        return array_search($role, $this->getRoles()) !== false ||
-            array_search(Role::ROLE_SUPER_ADMIN, $this->getRoles()) !== false;
+        return $this->hasRole(Role::forRegion($region)) ||
+            $this->hasRole(Role::ROLE_SUPER_ADMIN) ||
+            $this->hasRole(Role::ROLE_ALL_REGIONS);
+    }
+
+    #[Pure] private function hasRole(string $admin): bool
+    {
+        return array_search($admin, $this->getRoles()) !== false;
     }
 
     public function getRoles(): array

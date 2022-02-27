@@ -50,6 +50,7 @@ class UserController extends AbstractCrudController
                 ->setChoices(array_merge([
                     'Admin' => Role::ROLE_ADMIN,
                     'Super admin (can edit users)' => Role::ROLE_SUPER_ADMIN,
+                    'All regions' => Role::ROLE_ALL_REGIONS,
                 ], Role::allRegion()))
                 ->allowMultipleChoices(true),
         ];
