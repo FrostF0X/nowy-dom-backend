@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -67,6 +68,7 @@ class NotificationController extends AbstractCrudController
                     "‼️" => "‼️",
                     "⚠️" => "⚠️"
                 ])->setCustomOption('autocomplete', false),
+            BooleanField::new('duplicateToAll', 'Також на всю Україну!!!'),
             $this->addNewDataOnEdit(
                 TextareaField::new('title', 'Tитул')
                     ->setRequired(true), $pageName, ' - Повітряна тривога'
@@ -75,7 +77,9 @@ class NotificationController extends AbstractCrudController
                 TextareaField::new('body', 'Текст')
                     ->setRequired(true), $pageName, 'Рухайтесь до укриттів!'
             ),
-            Field::new('created_at', 'Створено')->setTemplatePath('date.html.twig')->onlyOnIndex(),
+            Field::new('created_at', 'Створено')
+                ->setTemplatePath('date.html.twig')
+                ->onlyOnIndex(),
         ];
     }
 

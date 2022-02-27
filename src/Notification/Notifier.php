@@ -29,7 +29,10 @@ class Notifier
             ->withNotification(FirebaseNotification::create(NotificationTitle::create($notification), $notification->getBody()));
 
         $this->messaging->send($regionMessage);
-        $this->messaging->send($allMessage);
+        if (!$notification->getRegion()->equals(NotificationRegion::TEST()) &&
+            $notification->getDuplicateToAll()) {
+            $this->messaging->send($allMessage);
+        }
     }
 
     private function messageToAllRegion(): CloudMessage

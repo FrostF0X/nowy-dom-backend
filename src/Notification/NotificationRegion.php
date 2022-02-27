@@ -6,7 +6,7 @@ use Elao\Enum\AutoDiscoveredValuesTrait;
 use Elao\Enum\ReadableEnum;
 
 /**
- * @method static self ALL()
+ * @method static self TEST()
  */
 class NotificationRegion extends ReadableEnum
 {

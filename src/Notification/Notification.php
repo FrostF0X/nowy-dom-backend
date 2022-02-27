@@ -24,6 +24,8 @@ class Notification implements Timestampable
     private string $body;
     #[Column(type: "string", nullable: false)]
     private string $signal;
+    #[Column(type: "boolean", nullable: false)]
+    private bool $duplicateToAll = true;
 
     public function getRegion(): NotificationRegion
     {
@@ -65,4 +67,13 @@ class Notification implements Timestampable
         $this->body = $body;
     }
 
+    public function getDuplicateToAll(): bool
+    {
+        return $this->duplicateToAll;
+    }
+
+    public function setDuplicateToAll(bool $duplicateToAll): void
+    {
+        $this->duplicateToAll = $duplicateToAll;
+    }
 }
