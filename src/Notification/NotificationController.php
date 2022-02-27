@@ -25,7 +25,7 @@ class NotificationController implements ControllerInterface
         if ($region && !NotificationRegion::accepts($region)) {
             return $this->response('Cannot accept value ' . $region, 400);
         }
-        $offers = $region ? $this->notifications->findBy(['region' => NotificationRegion::get($region)]) : $this->notifications->findAll();
+        $offers = $region ? $this->notifications->getByRegion(NotificationRegion::get($region)) : $this->notifications->getAll();
         return $this->response(NotificationOutput::createMany(...$offers));
     }
 
