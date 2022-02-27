@@ -18,6 +18,8 @@ class NotificationRepository extends ServiceEntityRepository
     public function getAll(): array
     {
         return $this->getAllQb()
+            ->where('e.region != :test')
+            ->setParameter('test', NotificationRegion::TEST()->getValue())
             ->getQuery()
             ->getResult();
     }
@@ -26,8 +28,6 @@ class NotificationRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')
             ->orderBy('e.createdAt', 'DESC')
-            ->where('e.region != :test')
-            ->setParameter('test', NotificationRegion::TEST()->getValue())
             ->setMaxResults(self::MAXRESULTS);
     }
 
