@@ -38,9 +38,9 @@ class NotificationController implements ControllerInterface
         );
     }
 
-    #[ArrayShape(['cache-control' => "string"])] private function cache(): array
+    #[ArrayShape(['Cloudflare-CDN-Cache-Control' => "string"])] private function cache(): array
     {
-        return ['cache-control' => 'max-age=60'];
+        return ['Cloudflare-CDN-Cache-Control' => 'max-age=60'];
     }
 
     #[Get('/api/v1/notification/region')]
