@@ -67,12 +67,14 @@ class NotificationController extends AbstractCrudController
                     "‼️" => "‼️",
                     "⚠️" => "⚠️"
                 ])->setCustomOption('autocomplete', false),
-            TextareaField::new('title', 'Tитул')
-                ->setFormTypeOption('data', ' - Повітряна тривога')
-                ->setRequired(true),
-            TextareaField::new('body', 'Текст')
-                ->setFormTypeOption('data', 'Рухайтесь до укриттів!')
-                ->setRequired(true),
+            $this->addNewDataOnEdit(
+                TextareaField::new('title', 'Tитул')
+                    ->setRequired(true), $pageName, ' - Повітряна тривога'
+            ),
+            $this->addNewDataOnEdit(
+                TextareaField::new('body', 'Текст')
+                    ->setRequired(true), $pageName, 'Рухайтесь до укриттів!'
+            ),
             Field::new('created_at', 'Створено')->setTemplatePath('date.html.twig')->onlyOnIndex(),
         ];
     }
@@ -83,6 +85,14 @@ class NotificationController extends AbstractCrudController
         $user = $this->getUser();
         return collect($user->getAllowedRegions())
             ->keyBy(fn(NotificationRegion $region) => $region->getReadable())->all();
+    }
+
+    private function addNewDataOnEdit(TextareaField $field, string $pageName, string $text): TextareaField
+    {
+        if ($pageName === 'new') {
+            $field->setFormTypeOption('data', $text);
+        }
+        return $field;
     }
 
 }
