@@ -67,7 +67,7 @@ class NotificationController extends AbstractCrudController
                     "⚠️" => "⚠️"
                 ])->setCustomOption('autocomplete', false),
             TextareaField::new('title', 'Tитул')
-                ->setFormTypeOption('data', 'Повітряна тривога')
+                ->setFormTypeOption('data', ' - Повітряна тривога')
                 ->setRequired(true),
             TextareaField::new('body', 'Текст')
                 ->setFormTypeOption('data', 'Рухайтесь до укриттів!')
