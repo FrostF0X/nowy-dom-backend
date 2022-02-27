@@ -43,13 +43,14 @@ class NotificationController implements ControllerInterface
         return ['cache-control' => 'max-age=60'];
     }
 
-    #[Get('/api/v1/notification/regions')]
+    #[Get('/api/v1/notification/region')]
     public function regions(): JsonResponse
     {
         $res = collect(NotificationRegion::instances())
             ->keyBy(fn(NotificationRegion $region) => $region->getValue())
             ->map(fn(NotificationRegion $region) => $region->getReadable())
             ->all();
+        $res = [NotificationRegionAll::VALUE => NotificationRegionAll::READABLE] + $res;
         return $this->response($res);
     }
 
