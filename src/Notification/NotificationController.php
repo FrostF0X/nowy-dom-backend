@@ -18,6 +18,9 @@ class NotificationController implements ControllerInterface
     #[QueryParam(name: "region", requirements: "\w+")]
     public function notifications(?string $region = null): JsonResponse
     {
+        if ($region === NotificationRegionAll::VALUE) {
+            $region = null;
+        }
         if ($region && !NotificationRegion::accepts($region)) {
             return new JsonResponse('Cannot accept value ' . $region, 400);
         }
