@@ -42,5 +42,4 @@ class Notifier
         return CloudMessage::withTarget('topic', $notification->getRegion()->getValue());
     }
 
-
 }
