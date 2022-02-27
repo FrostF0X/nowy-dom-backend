@@ -22,10 +22,10 @@ class Notifier
     public function send(Notification $notification)
     {
 
-        $regionMessage = $this->messageToAllRegion()
+        $allMessage = $this->messageToAllRegion()
             ->withNotification(FirebaseNotification::create(NotificationTitle::create($notification), $notification->getBody()));
 
-        $allMessage = $this->messageBasedOnRegion($notification)
+        $regionMessage = $this->messageBasedOnRegion($notification)
             ->withNotification(FirebaseNotification::create(NotificationTitle::create($notification), $notification->getBody()));
 
         $this->messaging->send($regionMessage);
