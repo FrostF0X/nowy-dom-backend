@@ -66,8 +66,12 @@ class NotificationController extends AbstractCrudController
                     "‼️" => "‼️",
                     "⚠️" => "⚠️"
                 ])->setCustomOption('autocomplete', false),
-            TextareaField::new('title', 'Tитул')->setRequired(true),
-            TextareaField::new('body', 'Текст')->setRequired(true),
+            TextareaField::new('title', 'Tитул')
+                ->setFormTypeOption('data', 'Повітряна тривога')
+                ->setRequired(true),
+            TextareaField::new('body', 'Текст')
+                ->setFormTypeOption('data', 'Рухайтесь до укриттів!')
+                ->setRequired(true),
             Field::new('created_at', 'Створено')->setTemplatePath('date.html.twig')->onlyOnIndex(),
         ];
     }

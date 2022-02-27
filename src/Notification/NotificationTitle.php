@@ -8,6 +8,6 @@ class NotificationTitle
 {
     #[Pure] public static function create(Notification $notification): string
     {
-        return $notification->getSignal() . ' ' . $notification->getTitle();
+        return $notification->getSignal() . ' - ' . $notification->getTitle();
     }
 }
