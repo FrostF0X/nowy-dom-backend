@@ -38,6 +38,7 @@ class NotificationRegion extends ReadableEnum
     public const CHERNIGIWSKA = 'CHERNIGIWSKA';
     public const KIYEW = 'KIYEW';
     public const KALUSH = 'KALUSH';
+    public const TEST = 'TEST';
 
     public const MAP = [
         'VINNYTSA' => "Вінницька",
@@ -66,6 +67,7 @@ class NotificationRegion extends ReadableEnum
         'CHERNIGIWSKA' => "Чернігівська",
         'KIYEW' => "Київ",
         'KALUSH' => "Калуш",
+        'TEST' => 'Для Тестів'
     ];
 
     public static function readables(): array
