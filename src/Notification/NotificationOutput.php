@@ -31,7 +31,7 @@ class NotificationOutput
             $notification->getCreatedAt()->format(DateTimeInterface::ATOM),
             $notification->getCreatedAt()->format('H:i / d.m'),
             $notification->getRegion()->getValue(),
-            $notification->getTitle(),
+            NotificationTitle::create($notification),
             $notification->getBody()
         );
     }

@@ -18,10 +18,12 @@ class Notification implements Timestampable
 
     #[Column(type: "notification_region", nullable: false)]
     private NotificationRegion $region;
-    #[Column(type: "text", nullable: true)]
+    #[Column(type: "text", nullable: false)]
     private string $title;
-    #[Column(type: "text", nullable: true)]
+    #[Column(type: "text", nullable: false)]
     private string $body;
+    #[Column(type: "string", nullable: false)]
+    private string $signal;
 
     public function getRegion(): NotificationRegion
     {
@@ -31,6 +33,16 @@ class Notification implements Timestampable
     public function setRegion(NotificationRegion $region): void
     {
         $this->region = $region;
+    }
+
+    public function getSignal(): string
+    {
+        return $this->signal;
+    }
+
+    public function setSignal(string $signal): void
+    {
+        $this->signal = $signal;
     }
 
     public function getTitle(): string

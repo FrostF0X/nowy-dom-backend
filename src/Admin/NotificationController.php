@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use Kreait\Firebase\Exception\FirebaseException;
@@ -59,9 +60,15 @@ class NotificationController extends AbstractCrudController
             EnumField::new('region', 'Регіон')
                 ->setEnumType(NotificationRegion::class)
                 ->setFormTypeOption('choices', $this->getRegions()),
-            TextareaField::new('title','Tитул'),
-            TextareaField::new('body', 'Текст'),
-            Field::new('created_at','Створено')->setTemplatePath('date.html.twig')->onlyOnIndex(),
+            ChoiceField::new('signal', 'Сигнал')
+                ->setChoices([
+                    "🚨" => "🚨",
+                    "‼️" => "‼️",
+                    "⚠️" => "⚠️"
+                ])->setCustomOption('autocomplete', false),
+            TextareaField::new('title', 'Tитул')->setRequired(true),
+            TextareaField::new('body', 'Текст')->setRequired(true),
+            Field::new('created_at', 'Створено')->setTemplatePath('date.html.twig')->onlyOnIndex(),
         ];
     }
 
