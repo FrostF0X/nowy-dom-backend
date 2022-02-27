@@ -22,7 +22,7 @@ class Notifier
     public function send(Notification $notification)
     {
 
-        $regionMessage = $this->messageBasedOnRegion($notification)
+        $regionMessage = $this->messageToAllRegion()
             ->withNotification(FirebaseNotification::create($notification->getTitle(), $notification->getBody()));
 
         $allMessage = $this->messageBasedOnRegion($notification)
@@ -32,14 +32,14 @@ class Notifier
         $this->messaging->send($allMessage);
     }
 
+    private function messageToAllRegion(): CloudMessage
+    {
+        return CloudMessage::withTarget('topic', NotificationRegionAll::VALUE);
+    }
+
     private function messageBasedOnRegion(Notification $notification): CloudMessage
     {
         return CloudMessage::withTarget('topic', $notification->getRegion()->getValue());
-    }
-
-    private function messageToAllRegion(Notification $notification): CloudMessage
-    {
-        return CloudMessage::withTarget('topic', NotificationRegionAll::VALUE);
     }
 
 
