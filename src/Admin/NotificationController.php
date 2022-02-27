@@ -6,8 +6,14 @@ use App\Admin\Fields\EnumField;
 use App\Notification\Notification;
 use App\Notification\NotificationRegion;
 use App\Notification\Notifier;
+use App\User\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
+use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use Kreait\Firebase\Exception\FirebaseException;
@@ -37,15 +43,34 @@ class NotificationController extends AbstractCrudController
         $this->notifier->send($entityInstance);
     }
 
+    public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
+    {
+        return parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters)
+            ->andWhere('entity.region in (:regions)')
+            ->setParameter('regions', collect($this->getUser()->getAllowedRegions())
+                ->map(fn(NotificationRegion $region) => $region->getValue())
+                ->all());
+    }
+
 
     public function configureFields(string $pageName): iterable
     {
         return [
-            EnumField::new('region')->setEnumType(NotificationRegion::class),
+            EnumField::new('region')
+                ->setEnumType(NotificationRegion::class)
+                ->setFormTypeOption('choices', $this->getRegions()),
             TextareaField::new('title'),
             TextareaField::new('body'),
             Field::new('created_at')->setTemplatePath('date.html.twig')->onlyOnIndex(),
         ];
+    }
+
+    private function getRegions(): array
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        return collect($user->getAllowedRegions())
+            ->keyBy(fn(NotificationRegion $region) => $region->getReadable())->all();
     }
 
 }

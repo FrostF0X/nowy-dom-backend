@@ -3,6 +3,7 @@
 namespace App\User;
 
 use App\Notification\NotificationRegion;
+use JetBrains\PhpStorm\Pure;
 
 class Role
 {
@@ -11,7 +12,11 @@ class Role
 
     public static function allRegion(): array
     {
-        return array_map(fn(string $i) => 'ROLE_' . $i, array_flip(NotificationRegion::MAP));
+        return array_flip(NotificationRegion::MAP);
     }
 
+    #[Pure] public static function forRegion(NotificationRegion $region): string
+    {
+        return $region->getValue();
+    }
 }

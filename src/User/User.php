@@ -3,6 +3,7 @@
 namespace App\User;
 
 use App\Common\Entity\HasId;
+use App\Notification\NotificationRegion;
 use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -49,17 +50,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $email;
     }
 
-    public function getRoles(): array
-    {
-        return $this->roles;
-    }
-
-    public function setRoles(array $roles): void
-    {
-        $this->roles = $roles;
-    }
-
-
     public function getPassword(): string
     {
         return $this->password;
@@ -91,6 +81,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
     }
 
+    public function getAllowedRegions(): array
+    {
+        return collect(NotificationRegion::instances())
+            ->filter(fn(NotificationRegion $region) => $this->isAllowed($region))
+            ->all();
+    }
+
+    #[Pure] public function isAllowed(NotificationRegion $region): bool
+    {
+        $role = Role::forRegion($region);
+        return array_search($role, $this->getRoles()) !== false ||
+            array_search(Role::ROLE_SUPER_ADMIN, $this->getRoles()) !== false;
+    }
+
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles): void
+    {
+        $this->roles = $roles;
+    }
 
     #[Pure] public function __toString(): string
     {

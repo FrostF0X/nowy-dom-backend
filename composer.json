@@ -14,6 +14,7 @@
     "easycorp/easyadmin-bundle": "^4.0",
     "elao/enum": "^1.17",
     "friendsofsymfony/rest-bundle": "^3.3",
+    "illuminate/collections": "^9.2",
     "kreait/firebase-bundle": "^4.0",
     "nelmio/cors-bundle": "^2.2",
     "phpdocumentor/reflection-docblock": "^5.3",
@@ -81,5 +82,9 @@
       "allow-contrib": false,
       "require": "5.4.*"
     }
+  },
+  "require-dev": {
+    "symfony/stopwatch": "5.4.*",
+    "symfony/web-profiler-bundle": "5.4.*"
   }
 }
