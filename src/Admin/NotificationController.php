@@ -48,6 +48,7 @@ class NotificationController extends AbstractCrudController
     {
         return parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters)
             ->andWhere('entity.region in (:regions)')
+            ->orderBy('entity.createdAt', 'DESC')
             ->setParameter('regions', collect($this->getUser()->getAllowedRegions())
                 ->map(fn(NotificationRegion $region) => $region->getValue())
                 ->all());
