@@ -11,6 +11,7 @@ class NotificationOutput
     public function __construct(
         public string $id,
         public string $createdAt,
+        public string $createdAtParsed,
         public string $region,
         public string $title,
         public string $body,
@@ -28,6 +29,7 @@ class NotificationOutput
         return new self(
             $notification->getId(),
             $notification->getCreatedAt()->format(DateTimeInterface::ATOM),
+            $notification->getCreatedAt()->format('H:i / d.m'),
             $notification->getRegion()->getValue(),
             $notification->getTitle(),
             $notification->getBody()
